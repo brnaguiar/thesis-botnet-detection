@@ -1,0 +1,12 @@
+## HOW TO RUN DNS2TCP:
+
+# 1.1 Init dns2tcpc 
+dns2tcpc -f dns2tcpc.conf
+
+# 1.2 Init my custom dns1tcpc 
+dns2tcpc -f dns2tcpc.conf
+
+# 2.1 send files to 127.0.0.1:
+scp -P 4430 binfile100k labcom@127.0.0.1:~/
+
+# 3. no need to configure iptables...

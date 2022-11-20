@@ -1,0 +1,11 @@
+----------------
+merlin doesnt accept arguments...
+-----------------
+
+sudo ./merlin...
+listeners
+use https
+set Interface 111.11.11.10
+set PSK labcom
+set Port 65321
+start

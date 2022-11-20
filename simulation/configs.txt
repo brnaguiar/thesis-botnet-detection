@@ -1,0 +1,101 @@
+##### ROUTER_COMPANY 
+
+conf t 
+int f0/0
+ip address 192.168.10.1 255.255.255.0
+no shutdown
+int f1/0
+ip address 172.16.0.1 255.255.255.0
+no shutdown
+exit
+ip route 100.10.10.0 255.255.255.0 172.16.0.3
+ip route 111.11.11.0 255.255.255.0 172.16.0.2
+ip route 112.12.12.0 255.255.255.0 172.16.0.4
+exit
+write
+conf t 
+interface f0/1
+ip address 192.168.2.3 255.255.255.0
+no shutdown
+exit
+ip route 0.0.0.0 0.0.0.0 192.168.2.1
+ip domain-lookup 
+ip nameserver 8.8.8.8 8.8.4.4
+
+
+##### ROUTER_IODINE 
+conf t 
+int f0/0
+ip address 100.10.10.1 255.255.255.0
+no shutdown
+int f1/0
+ip address 172.16.0.3 255.255.255.0
+no shutdown
+exit
+ip route 192.168.10.0 255.255.255.0 172.16.0.1
+ip route 111.11.11.0 255.255.255.0 172.16.0.2
+ip route 112.12.12.0 255.255.255.0 172.16.0.4  
+exit
+write
+conf t 
+interface f0/1
+ip address 192.168.2.5 255.255.255.0
+no shutdown
+exit
+ip route 0.0.0.0 0.0.0.0 192.168.2.1
+ip domain-lookup 
+ip nameserver 8.8.8.8 8.8.4.4
+
+##### ROUTER_REMOTE
+conf t 
+int f0/0
+ip address 111.11.11.1 255.255.255.0
+no shutdown
+int f1/0
+ip address 172.16.0.2 255.255.255.0
+no shutdown
+exit
+ip route 192.168.10.0 255.255.255.0 172.16.0.1
+ip route 100.10.10.0 255.255.255.0 172.16.0.3
+ip route 112.12.12.0 255.255.255.0 172.16.0.4
+exit
+write
+conf t 
+interface f0/1
+ip address 192.168.2.2 255.255.255.0
+no shutdown
+exit
+ip route 0.0.0.0 0.0.0.0 192.168.2.1
+ip domain-lookup 
+ip nameserver 8.8.8.8 8.8.4.4
+
+##### ROUTER_DNS   
+conf t
+int f1/0
+ip address 172.16.0.4 255.255.255.0
+no shutdown
+int f0/0
+ip address 112.12.12.1 255.255.255.0
+no shutdown
+exit
+ip route 192.168.10.0 255.255.255.0 172.16.0.1
+ip route 100.10.10.0 255.255.255.0 172.16.0.3
+ip route 111.11.11.0 255.255.255.0 172.16.0.2
+exit
+write
+conf t 
+interface f0/1
+ip address 192.168.2.4 255.255.255.0
+no shutdown
+exit
+ip route 0.0.0.0 0.0.0.0 192.168.2.1
+ip domain-lookup 
+ip nameserver 8.8.8.8 8.8.4.4
+
+#### IODINE SERVER
+sshpassword="labcom";\
+echo -e $sshpassword | sudo -S iodined -c 10.0.0.1 iodns.militech-solutions.com;\
+echo -e $sshpassword | sudo -S iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE;\
+echo -e $sshpassword | sudo -S iptables -A FORWARD -i enp0s3 -o dns0 -m state --state RELATED,ESTABLISHED -j ACCEPT;\
+echo -e $sshpassword | sudo -S iptables -A FORWARD -i dns0 -o enp0s3 -j ACCEPT';\
+

@@ -1,0 +1,7 @@
+### COMO CORRER:
+
+sudo dns2tcpd -f dns2tcp.conf
+
+### em principio nao é preciso a firewall...
+
+#sudo netstat -anp | grep dns2tcp
