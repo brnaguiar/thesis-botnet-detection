@@ -1,3 +1,0 @@
-grep: invalid option -- 'O'
-Usage: grep [OPTION]... PATTERNS [FILE]...
-Try 'grep --help' for more information.
